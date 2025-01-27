@@ -1,0 +1,8 @@
+use tkinter like tk
+
+func makeDisplay(){
+    
+    [Dream]"Make a Hello Work Screen using tkinter"
+    
+}
+makeDisplay()

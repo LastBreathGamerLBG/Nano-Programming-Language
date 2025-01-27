@@ -1,0 +1,15 @@
+print("Welcome To Table Maker")
+
+num:int = int(input("Enter A Number: "))
+
+
+for (i in range(11)){
+    
+    // dream is use to call Ai in the Program
+    // '$' this is used to Refer an container
+
+    [Dream]"Do something here to print table of given $num"
+}
+
+// Nano Program Language use cache so you dont have to recompile the whole
+// program again and again just type ".\nano cache"
