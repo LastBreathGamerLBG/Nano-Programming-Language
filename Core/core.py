@@ -4,7 +4,6 @@ import hashlib
 from sys import platform
 import google.generativeai as genai
 
-# Checking Operating System
 if platform == "linux" or platform == "linux2":
     python_ref = "python3"
 else:
@@ -12,7 +11,7 @@ else:
 
 CACHE_DIR = "cache"
 
-os.makedirs(CACHE_DIR, exist_ok=True) 
+os.makedirs(CACHE_DIR, exist_ok=True)
 
 def get_file_hash(file_path):
     hasher = hashlib.md5()
@@ -29,16 +28,20 @@ def readDocs():
         print(f"Error: Readme.txt not found at {docs_path}")
         sys.exit(1)
 
-def runner(nano_code: str, docs: str, req: str) -> str:
+def runner(nano_code: str, docs: str, req: str, old_python_code: str = None) -> str:
     gemini_api_key = "AIzaSyC0JYPMrXz3uyilRkkuVKaIkC3HBQ9xmLg"
     genai.configure(api_key=gemini_api_key)
     model = genai.GenerativeModel("gemini-1.5-flash")
-
+    
     try:
         if req == "run":
             print("Running Nano Code...")
         
-        response = model.generate_content(f"{docs}\n\n{nano_code}")
+        prompt = f"{docs}\n\n{nano_code}"
+        if old_python_code:
+            prompt += f"\n\nPreviously Generated Python Code:\n{old_python_code}"
+        
+        response = model.generate_content(prompt)
         responseData = response.text.replace("```", "").strip()
         
         if responseData.lower().startswith("python"):
@@ -69,13 +72,18 @@ def cache_all_nano_files():
                 with open(hash_file, 'r') as f:
                     old_hash = f.read().strip()
             
+            old_python_code = ""
+            if os.path.exists(py_file):
+                with open(py_file, 'r', encoding="utf-8") as f:
+                    old_python_code = f.read()
+            
             if not os.path.exists(py_file) or nano_hash != old_hash:
                 print(f"Caching: {file}")
                 with open(nano_path, 'r', encoding="utf-8") as file:
                     nano_code = file.read()
                 docs = readDocs()
                 
-                python_code = runner(nano_code, docs, "cache")
+                python_code = runner(nano_code, docs, "cache", old_python_code)
                 
                 with open(py_file, "w", encoding="utf-8") as f:
                     f.write(python_code)
@@ -114,12 +122,17 @@ def main():
         with open(hash_file, 'r') as f:
             old_hash = f.read().strip()
     
+    old_python_code = ""
+    if os.path.exists(py_file):
+        with open(py_file, 'r', encoding="utf-8") as f:
+            old_python_code = f.read()
+    
     if not os.path.exists(py_file) or nano_hash != old_hash:
         print("Updating Cache...")
         with open(nano_path, 'r', encoding="utf-8") as file:
             nano_code = file.read()
         docs = readDocs()
-        python_code = runner(nano_code, docs, "run")
+        python_code = runner(nano_code, docs, "run", old_python_code)
         
         with open(py_file, "w", encoding="utf-8") as f:
             f.write(python_code)
