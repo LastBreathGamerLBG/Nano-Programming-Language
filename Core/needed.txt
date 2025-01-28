@@ -1,0 +1,4 @@
+requests
+google.generativeai
+flet
+grpcio==1.60.1
