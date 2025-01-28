@@ -1,8 +1,8 @@
 # Nano Programming Language 🚀
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-brightgreen.svg)](https://github.com/yourusername/nano-lang)  
-[![Package Manager](https://img.shields.io/badge/Package%20Manager-yoyo-yellow.svg)](https://github.com/yourusername/nano-lang)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-brightgreen.svg)](https://github.com/LastBreathGamerLBG/NanoLanguage)  
+[![Package Manager](https://img.shields.io/badge/Package%20Manager-yoyo-yellow.svg)](https://github.com/LastBreathGamerLBG/NanoLanguage)
 
 **Nano: Less Code, More Output.**
 
@@ -20,7 +20,7 @@ Nano is a minimalist programming language designed for developers who value conc
 
 ## Getting Started 🛠️
 
-### Colab NoteBook Link :)
+### Colab Notebook Link 🙂
 * https://colab.research.google.com/drive/1BKh0yRuJaKUyXZS3-8jOVLFU_hY2HWnu?usp=sharing
 
 ### Prerequisites 📋
@@ -56,10 +56,25 @@ Nano is a minimalist programming language designed for developers who value conc
 
 1.  Create a file with the `.nano` extension (e.g., `test.nano`).
 2.  Write your Nano code in the file.
-3.  Execute the file using the Nano interpreter (specific command will depend on your implementation). For example:
+3.  Execute the file using the Nano interpreter:
     ```bash
     nano test.nano 
     ```
+
+4.  To cache all `.nano` files (without execution), use:
+    ```bash
+    nano cache
+    ```
+
+### How It Works ⚙️
+
+*   **`nano <filename.nano>`:**
+    *   Checks for changes in the `.nano` file.
+    *   Updates the cache only if the file has changed.
+    *   Executes the Python code generated from the Nano code.
+*   **`nano cache`:**
+    *   Caches all `.nano` files in the parent directory without executing any code.
+    *   Skips files that are already cached and unchanged.
 
 ## Nano Syntax Example 📝
 
@@ -80,8 +95,6 @@ print(a + b)
 
 *   `yoyo setup nano`: Initializes the Nano environment.
 *   `yoyo install <package_name>`: Installs a specific package.
-*   `yoyo update <package_name>`: Updates a specific package.
-*   `yoyo list`: Lists installed packages.
 
 ## Contributing 🤝
 
